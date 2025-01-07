@@ -50,12 +50,12 @@ import java.util.concurrent.TimeUnit;
 @Autonomous(name = "RED_BUCKET_SIDE", group = "Autonomous")
 public class REDBUCKET extends LinearOpMode {
     public class Lift {
-        private DcMotorEx lift;
+        private DcMotorEx ylinear;
 
         public Lift(HardwareMap hardwareMap) {
-            lift = hardwareMap.get(DcMotorEx.class, "liftMotor");
-            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            lift.setDirection(DcMotorSimple.Direction.FORWARD);
+            ylinear = hardwareMap.get(DcMotorEx.class, "ylinear");
+            ylinear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            ylinear.setDirection(DcMotorSimple.Direction.FORWARD);
         }
 
         public class LiftUp implements Action {
@@ -64,16 +64,16 @@ public class REDBUCKET extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    lift.setPower(0.8);
+                    ylinear.setPower(0.8);
                     initialized = true;
                 }
 
-                double pos = lift.getCurrentPosition();
+                double pos = ylinear.getCurrentPosition();
                 packet.put("liftPos", pos);
                 if (pos < 3000.0) {
                     return true;
                 } else {
-                    lift.setPower(0);
+                    ylinear.setPower(0);
                     return false;
                 }
             }
@@ -88,16 +88,16 @@ public class REDBUCKET extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    lift.setPower(-0.8);
+                    ylinear.setPower(-0.8);
                     initialized = true;
                 }
 
-                double pos = lift.getCurrentPosition();
+                double pos = ylinear.getCurrentPosition();
                 packet.put("liftPos", pos);
                 if (pos > 100.0) {
                     return true;
                 } else {
-                    lift.setPower(0);
+                    ylinear.setPower(0);
                     return false;
                 }
             }
@@ -148,16 +148,15 @@ public class REDBUCKET extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(33, Math.toRadians(0))
-                .waitSeconds(2)
+
                 .setTangent(Math.toRadians(90))
-                .lineToY(48)
-                .setTangent(Math.toRadians(0))
-                .lineToX(32)
-                .strafeTo(new Vector2d(44.5, 30))
+                //.lineToY(48)
+                //.setTangent(Math.toRadians(0))
+                //.lineToX(32)
+                .strafeTo(new Vector2d(11.8, 100))
                 .turn(Math.toRadians(180))
-                .lineToX(47.5)
-                .waitSeconds(3);
+                //.lineToX(47.5)
+                .waitSeconds(30);
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
                 .lineToY(37)
                 .setTangent(Math.toRadians(0))
@@ -167,8 +166,8 @@ public class REDBUCKET extends LinearOpMode {
                 .lineToXSplineHeading(46, Math.toRadians(180))
                 .waitSeconds(3);
         TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(33, Math.toRadians(180))
-                .waitSeconds(2)
+                /*.lineToYSplineHeading(33, Math.toRadians(180))
+                .waitSeconds(2)*/
                 .strafeTo(new Vector2d(46, 30))
                 .waitSeconds(3);
         Action trajectoryActionCloseOut = tab1.endTrajectory().fresh()
@@ -204,9 +203,9 @@ public class REDBUCKET extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         trajectoryActionChosen,
-                        lift.liftUp(),
+                        /*lift.liftUp(),
                         claw.openClaw(),
-                        lift.liftDown(),
+                        lift.liftDown(),*/
                         trajectoryActionCloseOut
                 )
         );
