@@ -139,7 +139,7 @@ public class REDBUCKET extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Claw claw = new Claw(hardwareMap);
         Lift lift = new Lift(hardwareMap);
@@ -148,15 +148,44 @@ public class REDBUCKET extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-
+                .strafeTo(new Vector2d(0, 5))
+                //.waitSeconds(1)
+                .setTangent(Math.toRadians(180))
+                .lineToXSplineHeading(-30, Math.toRadians(220))
+                .waitSeconds(1)
+                .setTangent(Math.toRadians(0))
+                .lineToXSplineHeading(6, Math.toRadians(90))
+                .strafeTo(new Vector2d(0, 18))
                 .setTangent(Math.toRadians(90))
+                .lineToYSplineHeading(34, Math.toRadians(180))
+                .strafeTo(new Vector2d(1, 30))
+                .setTangent(Math.toRadians(180))
+                //.setTangent(Math.toRadians(90))
+                //.lineToYSplineHeading(30, Math.toRadians(90))
+                .waitSeconds(30);
+
+                /*.waitSeconds(0.3)
+                .turn(Math.toRadians(-40))
+
+                .strafeTo(new Vector2d(0, 0))
+                //.waitSeconds(1)
+                .turn(Math.toRadians(-90))
+                .strafeTo(new Vector2d(0, 22))
+                .turn(Math.toRadians(90))
+                .setTangent(Math.toRadians(180))
+                .lineToXSplineHeading(-35, Math.toRadians(215))*/
+                //.waitSeconds(1)
+                //.setTangent(Math.toRadians(90))
+                //.lineToYSplineHeading(20, Math.toRadians(180))
+                //.strafeTo(new Vector2d(20, 0))
+                //.setTangent(Math.toRadians(90))
                 //.lineToY(48)
                 //.setTangent(Math.toRadians(0))
                 //.lineToX(32)
-                .strafeTo(new Vector2d(11.8, 100))
-                .turn(Math.toRadians(180))
+                /*.strafeTo(new Vector2d(0, 100))
+                .turn(Math.toRadians(180))*/
                 //.lineToX(47.5)
-                .waitSeconds(30);
+
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
                 .lineToY(37)
                 .setTangent(Math.toRadians(0))
