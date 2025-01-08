@@ -147,7 +147,7 @@ public class REDBUCKET extends LinearOpMode {
         // vision here that outputs position
         int visionOutputPosition = 1;
 
-        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
+            TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                 .strafeTo(new Vector2d(0, 5))
                 //.waitSeconds(1)
                 .setTangent(Math.toRadians(180))
@@ -159,7 +159,14 @@ public class REDBUCKET extends LinearOpMode {
                 .setTangent(Math.toRadians(90))
                 .lineToYSplineHeading(34, Math.toRadians(180))
                 .strafeTo(new Vector2d(1, 30))
-                .setTangent(Math.toRadians(180))
+                //.setTangent(Math.toRadians(180))
+
+                //testing new are
+                //.turn(Math.toRadians(90))
+                //.setTangent(Math.toRadians(270))
+                //.lineToYSplineHeading(0, Math.toRadians(180))
+
+
                 //.setTangent(Math.toRadians(90))
                 //.lineToYSplineHeading(30, Math.toRadians(90))
                 .waitSeconds(30);
