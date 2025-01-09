@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -51,11 +52,14 @@ import java.util.concurrent.TimeUnit;
 public class REDBUCKET extends LinearOpMode {
     public class Lift {
         private DcMotorEx ylinear;
-
+        private DcMotorEx ylinear2;
         public Lift(HardwareMap hardwareMap) {
             ylinear = hardwareMap.get(DcMotorEx.class, "ylinear");
             ylinear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             ylinear.setDirection(DcMotorSimple.Direction.FORWARD);
+            ylinear2 = hardwareMap.get(DcMotorEx.class, "ylinear2");
+            ylinear2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            ylinear2.setDirection(DcMotorSimple.Direction.FORWARD);
         }
 
         public class LiftUp implements Action {
@@ -64,16 +68,18 @@ public class REDBUCKET extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    ylinear.setPower(0.8);
+                    ylinear.setPower(-1);
+                    ylinear2.setPower(1);
                     initialized = true;
                 }
 
-                double pos = ylinear.getCurrentPosition();
+                double pos = ylinear2.getCurrentPosition();
                 packet.put("liftPos", pos);
                 if (pos < 3000.0) {
                     return true;
                 } else {
                     ylinear.setPower(0);
+                    ylinear2.setPower(0);
                     return false;
                 }
             }
@@ -88,15 +94,17 @@ public class REDBUCKET extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    ylinear.setPower(-0.8);
+                    ylinear.setPower(0.8);
+                    ylinear2.setPower(-0.8);
                     initialized = true;
                 }
 
-                double pos = ylinear.getCurrentPosition();
+                double pos = ylinear2.getCurrentPosition();
                 packet.put("liftPos", pos);
                 if (pos > 100.0) {
                     return true;
                 } else {
+                    ylinear.setPower(0);
                     ylinear.setPower(0);
                     return false;
                 }
@@ -106,7 +114,38 @@ public class REDBUCKET extends LinearOpMode {
             return new LiftDown();
         }
     }
+    public class Intake {
+        private Servo xlinear;
+        private CRServo intake;
+        public Intake(HardwareMap hardwareMap) {
+            xlinear = hardwareMap.get(Servo.class, "xlinear");
+            intake = hardwareMap.get(CRServo.class, "intake");
+        }
 
+        public class TakeIn implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                xlinear.setPosition(1);
+                intake.setPower(-1);
+                return false;
+            }
+        }
+        public Action TakeIn() {
+            return new TakeIn();
+        }
+
+        public class Outake implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                xlinear.setPosition(0.6);
+                intake.setPower(1);
+                return false;
+            }
+        }
+        public Action Outake() {
+            return new Outake();
+        }
+    }
     public class Claw {
         private Servo claw;
 
@@ -148,25 +187,39 @@ public class REDBUCKET extends LinearOpMode {
         int visionOutputPosition = 1;
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(0, 5))
+                    .strafeTo(new Vector2d(0, 5))
+                    .splineToSplineHeading(new Pose2d(-25, 8, Math.toRadians(220)), Math.toRadians(180))
+                    .turn(Math.toRadians(-130))
+                    .splineToSplineHeading(new Pose2d(16, 38, Math.toRadians(180)), Math.toRadians(103))
+                    .strafeTo(new Vector2d(17, 38))
+                    .waitSeconds(3)
+                    .strafeTo(new Vector2d(19, 38))
+                    .splineToSplineHeading(new Pose2d(-3, 20, Math.toRadians(270)), Math.toRadians(0))
+                    .splineToSplineHeading(new Pose2d(-25, 2, Math.toRadians(228)), Math.toRadians(0))
+
+                /*.strafeTo(new Vector2d(0, 5))
                 //.waitSeconds(1)
                 .setTangent(Math.toRadians(180))
                 .lineToXSplineHeading(-30, Math.toRadians(220))
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(0))
-                .lineToXSplineHeading(6, Math.toRadians(90))
-                .strafeTo(new Vector2d(0, 18))
+                .lineToXSplineHeading(0, Math.toRadians(90))
+                .strafeTo(new Vector2d(0, 19))
                 .setTangent(Math.toRadians(90))
                 .lineToYSplineHeading(34, Math.toRadians(180))
-                .strafeTo(new Vector2d(1, 30))
+                //.strafeTo(new Vector2d(1, 30))
                 //.setTangent(Math.toRadians(180))
-
+                    .strafeTo(new Vector2d(0, 40))
                 //testing new are
-                //.turn(Math.toRadians(90))
-                //.setTangent(Math.toRadians(270))
-                //.lineToYSplineHeading(0, Math.toRadians(180))
+                .turn(Math.toRadians(90))
+                .setTangent(Math.toRadians(270))
+                .lineToYSplineHeading(4, Math.toRadians(220))
+*/
 
-
+                    /*.splineToConstantHeading()
+                    .splineToSplineHeading()
+                    .strafeTo()
+                    */
                 //.setTangent(Math.toRadians(90))
                 //.lineToYSplineHeading(30, Math.toRadians(90))
                 .waitSeconds(30);
@@ -239,9 +292,10 @@ public class REDBUCKET extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         trajectoryActionChosen,
-                        /*lift.liftUp(),
+                        lift.liftUp(),
                         claw.openClaw(),
-                        lift.liftDown(),*/
+                        lift.liftDown(),
+
                         trajectoryActionCloseOut
                 )
         );
