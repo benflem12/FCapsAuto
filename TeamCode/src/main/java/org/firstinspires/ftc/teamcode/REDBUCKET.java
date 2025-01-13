@@ -75,7 +75,7 @@ public class REDBUCKET extends LinearOpMode {
 
                 double pos = ylinear2.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos < 3000.0) {
+                if (pos < 4150.0) {
                     return true;
                 } else {
                     ylinear.setPower(0);
@@ -182,87 +182,59 @@ public class REDBUCKET extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Claw claw = new Claw(hardwareMap);
         Lift lift = new Lift(hardwareMap);
-
+        Intake intake = new Intake(hardwareMap);
         // vision here that outputs position
         int visionOutputPosition = 1;
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(0, 5))
                     .splineToSplineHeading(new Pose2d(-25, 8, Math.toRadians(220)), Math.toRadians(180))
-                    .turn(Math.toRadians(-130))
-                    .splineToSplineHeading(new Pose2d(16, 38, Math.toRadians(180)), Math.toRadians(103))
-                    .strafeTo(new Vector2d(17, 38))
-                    .waitSeconds(3)
-                    .strafeTo(new Vector2d(19, 38))
-                    .splineToSplineHeading(new Pose2d(-3, 20, Math.toRadians(270)), Math.toRadians(0))
-                    .splineToSplineHeading(new Pose2d(-25, 2, Math.toRadians(228)), Math.toRadians(0))
-
-                /*.strafeTo(new Vector2d(0, 5))
-                //.waitSeconds(1)
-                .setTangent(Math.toRadians(180))
-                .lineToXSplineHeading(-30, Math.toRadians(220))
-                .waitSeconds(1)
-                .setTangent(Math.toRadians(0))
-                .lineToXSplineHeading(0, Math.toRadians(90))
-                .strafeTo(new Vector2d(0, 19))
-                .setTangent(Math.toRadians(90))
-                .lineToYSplineHeading(34, Math.toRadians(180))
-                //.strafeTo(new Vector2d(1, 30))
-                //.setTangent(Math.toRadians(180))
-                    .strafeTo(new Vector2d(0, 40))
-                //testing new are
-                .turn(Math.toRadians(90))
-                .setTangent(Math.toRadians(270))
-                .lineToYSplineHeading(4, Math.toRadians(220))
-*/
-
-                    /*.splineToConstantHeading()
-                    .splineToSplineHeading()
-                    .strafeTo()
-                    */
-                //.setTangent(Math.toRadians(90))
-                //.lineToYSplineHeading(30, Math.toRadians(90))
-                .waitSeconds(30);
-
-                /*.waitSeconds(0.3)
-                .turn(Math.toRadians(-40))
-
-                .strafeTo(new Vector2d(0, 0))
-                //.waitSeconds(1)
-                .turn(Math.toRadians(-90))
-                .strafeTo(new Vector2d(0, 22))
-                .turn(Math.toRadians(90))
-                .setTangent(Math.toRadians(180))
-                .lineToXSplineHeading(-35, Math.toRadians(215))*/
-                //.waitSeconds(1)
-                //.setTangent(Math.toRadians(90))
-                //.lineToYSplineHeading(20, Math.toRadians(180))
-                //.strafeTo(new Vector2d(20, 0))
-                //.setTangent(Math.toRadians(90))
-                //.lineToY(48)
-                //.setTangent(Math.toRadians(0))
-                //.lineToX(32)
-                /*.strafeTo(new Vector2d(0, 100))
-                .turn(Math.toRadians(180))*/
-                //.lineToX(47.5)
-
+                    .waitSeconds(0.5);
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .lineToY(37)
-                .setTangent(Math.toRadians(0))
-                .lineToX(18)
-                .waitSeconds(3)
-                .setTangent(Math.toRadians(0))
-                .lineToXSplineHeading(46, Math.toRadians(180))
-                .waitSeconds(3);
+                .waitSeconds(1)
+                .turn(Math.toRadians(-130))
+                .splineToSplineHeading(new Pose2d(16, 38, Math.toRadians(180)), Math.toRadians(103))
+                .strafeTo(new Vector2d(17, 38))
+                .waitSeconds(0.5);
         TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
-                /*.lineToYSplineHeading(33, Math.toRadians(180))
-                .waitSeconds(2)*/
-                .strafeTo(new Vector2d(46, 30))
-                .waitSeconds(3);
-        Action trajectoryActionCloseOut = tab1.endTrajectory().fresh()
-                .strafeTo(new Vector2d(48, 12))
-                .build();
+                .strafeTo(new Vector2d(19, 38))
+                .turn(Math.toRadians(53))
+                .strafeTo(new Vector2d(5, 13))
+                .strafeTo(new Vector2d(5,13))
+                .waitSeconds(0.5);
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(initialPose)
+                .turn(Math.toRadians(180))
+                .waitSeconds(1)
+                .splineToSplineHeading(new Pose2d(12, 36, Math.toRadians(100)), Math.toRadians(180))
+                .waitSeconds(1)
+                .turn(Math.toRadians(95))
+                .strafeTo(new Vector2d(9,36))
+                .waitSeconds(1);
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(initialPose)
+                .turn(Math.toRadians(90))
+                .splineToSplineHeading(new Pose2d(5, 13, Math.toRadians(233)), Math.toRadians(180))
+                .waitSeconds(0.5);
 
+        Action trajectoryActionCloseOut = tab1.endTrajectory().fresh()
+                //.strafeTo(new Vector2d(-25, 8))
+                .waitSeconds(0.5)
+                .build();
+        Action trajectoryActionCloseOut2 = tab2.endTrajectory().fresh()
+                //.strafeTo(new Vector2d(17, 38))
+                .waitSeconds(0.5)
+                .build();
+        Action trajectoryActionCloseOut3 = tab3.endTrajectory().fresh()
+                //.strafeTo(new Vector2d(5, 13))
+                .waitSeconds(0.5)
+                .build();
+        Action trajectoryActionCloseOut4 = tab4.endTrajectory().fresh()
+                //.strafeTo(new Vector2d(9, 36))
+                .waitSeconds(0.5)
+                .build();
+        Action trajectoryActionCloseOut5 = tab5.endTrajectory().fresh()
+                //.strafeTo(new Vector2d(5, 13))
+                .waitSeconds(0.5)
+                .build();
         // actions that need to happen on init; for instance, a claw tightening.
         Actions.runBlocking(claw.closeClaw());
 
@@ -281,22 +253,59 @@ public class REDBUCKET extends LinearOpMode {
         if (isStopRequested()) return;
 
         Action trajectoryActionChosen;
-        if (startPosition == 1) {
             trajectoryActionChosen = tab1.build();
-        } else if (startPosition == 2) {
-            trajectoryActionChosen = tab2.build();
-        } else {
-            trajectoryActionChosen = tab3.build();
-        }
+
+        Action trajectoryActionChosen2;
+                trajectoryActionChosen2 = tab2.build();
+
+        Action trajectoryActionChosen3;
+                trajectoryActionChosen3 = tab3.build();
+
+        Action trajectoryActionChosen4;
+                trajectoryActionChosen4 = tab4.build();
+
+        Action trajectoryActionChosen5;
+                trajectoryActionChosen5 = tab5.build();
 
         Actions.runBlocking(
                 new SequentialAction(
                         trajectoryActionChosen,
-                        lift.liftUp(),
-                        claw.openClaw(),
-                        lift.liftDown(),
+                        //lift.liftUp(),
+                        //claw.openClaw(),
+                        //lift.liftDown(),
+                        //claw.closeClaw(),
+                        //trajectoryActionCloseOut,
+                        //intake.TakeIn(),
 
-                        trajectoryActionCloseOut
+                        //intake.Outake(),
+                        trajectoryActionChosen2,
+                        //lift.liftUp(),
+                        //claw.openClaw(),
+                        //lift.liftDown(),
+
+                        //trajectoryActionCloseOut2,
+
+                        trajectoryActionChosen3,
+                        //lift.liftUp(),
+                        //claw.openClaw(),
+                        //lift.liftDown(),
+
+                        //trajectoryActionCloseOut3,
+
+                        trajectoryActionChosen4,
+                        //lift.liftUp(),
+                        //claw.openClaw(),
+                        //lift.liftDown(),
+
+                        //trajectoryActionCloseOut4,
+
+                        trajectoryActionChosen5,
+                        //lift.liftUp(),
+                        //claw.openClaw(),
+                        //lift.liftDown(),
+
+                        trajectoryActionCloseOut5
+
                 )
         );
     }
