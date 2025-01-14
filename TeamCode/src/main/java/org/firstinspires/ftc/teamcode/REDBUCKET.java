@@ -125,8 +125,10 @@ public class REDBUCKET extends LinearOpMode {
         public class TakeIn implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                xlinear.setPosition(1);
+                xlinear.setPosition(0.6);
                 intake.setPower(-1);
+                sleep(500);
+                xlinear.setPosition(1);
                 return false;
             }
         }
@@ -139,6 +141,8 @@ public class REDBUCKET extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 xlinear.setPosition(0.6);
                 intake.setPower(1);
+                sleep(500);
+                xlinear.setPosition(1);
                 return false;
             }
         }
@@ -188,21 +192,21 @@ public class REDBUCKET extends LinearOpMode {
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(0, 5))
-                    .splineToSplineHeading(new Pose2d(-25, 8, Math.toRadians(220)), Math.toRadians(180))
+                    .splineToSplineHeading(new Pose2d(-22, 9, Math.toRadians(220)), Math.toRadians(180))
                     .waitSeconds(0.5);
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-22,9,Math.toRadians(220)))
                 .waitSeconds(1)
                 .turn(Math.toRadians(-130))
                 .splineToSplineHeading(new Pose2d(16, 38, Math.toRadians(180)), Math.toRadians(103))
                 .strafeTo(new Vector2d(17, 38))
                 .waitSeconds(0.5);
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder tab3 = drive.actionBuilder( new Pose2d(17,38,Math.toRadians(180)))
                 .strafeTo(new Vector2d(19, 38))
                 .turn(Math.toRadians(53))
                 .strafeTo(new Vector2d(5, 13))
                 .strafeTo(new Vector2d(5,13))
                 .waitSeconds(0.5);
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(5,13,Math.toRadians(233)))
                 .turn(Math.toRadians(180))
                 .waitSeconds(1)
                 .splineToSplineHeading(new Pose2d(12, 36, Math.toRadians(100)), Math.toRadians(180))
@@ -210,7 +214,7 @@ public class REDBUCKET extends LinearOpMode {
                 .turn(Math.toRadians(95))
                 .strafeTo(new Vector2d(9,36))
                 .waitSeconds(1);
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(9,36,Math.toRadians(195)))
                 .turn(Math.toRadians(90))
                 .splineToSplineHeading(new Pose2d(5, 13, Math.toRadians(233)), Math.toRadians(180))
                 .waitSeconds(0.5);
@@ -271,37 +275,33 @@ public class REDBUCKET extends LinearOpMode {
                 new SequentialAction(
                         trajectoryActionChosen,
                         //lift.liftUp(),
-                        //claw.openClaw(),
-                        //lift.liftDown(),
-                        //claw.closeClaw(),
-                        //trajectoryActionCloseOut,
-                        //intake.TakeIn(),
 
                         //intake.Outake(),
-                        trajectoryActionChosen2,
-                        //lift.liftUp(),
-                        //claw.openClaw(),
+
                         //lift.liftDown(),
 
-                        //trajectoryActionCloseOut2,
+                        trajectoryActionChosen2,
+
+                        //intake.TakeIn(),
+
 
                         trajectoryActionChosen3,
                         //lift.liftUp(),
-                        //claw.openClaw(),
+                        //intake.Outake(),
+
                         //lift.liftDown(),
 
-                        //trajectoryActionCloseOut3,
+
 
                         trajectoryActionChosen4,
-                        //lift.liftUp(),
-                        //claw.openClaw(),
-                        //lift.liftDown(),
 
-                        //trajectoryActionCloseOut4,
+                        //intake.TakeIn(),
+
 
                         trajectoryActionChosen5,
                         //lift.liftUp(),
-                        //claw.openClaw(),
+                        //intake.Outake(),
+
                         //lift.liftDown(),
 
                         trajectoryActionCloseOut5
