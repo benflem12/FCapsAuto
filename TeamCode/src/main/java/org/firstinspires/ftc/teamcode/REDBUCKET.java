@@ -198,7 +198,7 @@ public class REDBUCKET extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(0.5, 0, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Claw claw = new Claw(hardwareMap);
         Lift lift = new Lift(hardwareMap);
@@ -220,10 +220,10 @@ public class REDBUCKET extends LinearOpMode {
         TrajectoryActionBuilder tab3 = drive.actionBuilder( new Pose2d(14.5,38,Math.toRadians(180)))
                 .strafeTo(new Vector2d(19, 38))
                 .turn(Math.toRadians(53))
-                .strafeTo(new Vector2d(7, 14))
-                .strafeTo(new Vector2d(7,14));
+                .strafeTo(new Vector2d(9, 15))
+                .strafeTo(new Vector2d(9,15));
 
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(7,14,Math.toRadians(233)))
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(9,15,Math.toRadians(233)))
                 .turn(Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(12, 36, Math.toRadians(100)), Math.toRadians(180))
                 .turn(Math.toRadians(95))
