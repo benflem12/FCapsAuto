@@ -205,6 +205,8 @@ public class REDBUCKET extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         // vision here that outputs position
         int visionOutputPosition = 1;
+        TrajectoryActionBuilder tabturn = drive.actionBuilder(initialPose)
+                .turn(Math.toRadians(200));
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(0, 5))
@@ -272,7 +274,8 @@ public class REDBUCKET extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-
+        Action trajectoryActionChosenturn;
+        trajectoryActionChosenturn = tabturn.build();
         Action trajectoryActionChosen;
             trajectoryActionChosen = tab1.build();
 
@@ -294,7 +297,8 @@ public class REDBUCKET extends LinearOpMode {
 
 
         Actions.runBlocking(
-                new SequentialAction(
+                trajectoryActionChosenturn
+              /*  new SequentialAction(
 
                         new ParallelAction(
                                 trajectoryActionChosen,
@@ -330,7 +334,7 @@ public class REDBUCKET extends LinearOpMode {
                         intake.Outake(),
                         lift.liftDown(),
                         trajectoryActionCloseOut5
-                )
+                )*/
         );
     }
 }
