@@ -224,7 +224,7 @@ public class REDBUCKET extends LinearOpMode {
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(0, 5))
-                    .splineToSplineHeading(new Pose2d(-16, 12, Math.toRadians(220)), Math.toRadians(180))
+                    .splineToSplineHeading(new Pose2d(-12, 8, Math.toRadians(220)), Math.toRadians(190))
                     .waitSeconds(0.5);
         TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-22,9 ,Math.toRadians(220)))
                 .strafeTo(new Vector2d(-24, 7))
@@ -234,6 +234,7 @@ public class REDBUCKET extends LinearOpMode {
                 //.strafeTo(new Vector2d(19, 38));
         TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,18,Math.toRadians(90)))
                 .turn(Math.toRadians(-40))
+                .strafeTo(new Vector2d(-24, 19))
                 .waitSeconds(1);
                 //.strafeTo(new Vector2d(14.5,38));
                 //.strafeTo(new Vector2d(16,38));
@@ -241,7 +242,7 @@ public class REDBUCKET extends LinearOpMode {
 
                 .turn(Math.toRadians(190))
 
-                .strafeTo(new Vector2d(-26,12));
+                .strafeTo(new Vector2d(-22,8));
 
         TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(7,19,Math.toRadians(233)))
                 .turn(Math.toRadians(180))
