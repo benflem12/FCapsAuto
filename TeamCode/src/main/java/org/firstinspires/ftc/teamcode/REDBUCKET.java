@@ -229,10 +229,10 @@ public class REDBUCKET extends LinearOpMode {
         TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-22,9 ,Math.toRadians(220)))
                 .strafeTo(new Vector2d(-24, 7))
                 .turn(Math.toRadians(-120))
-                .strafeTo(new Vector2d(-24, 20));
+                .strafeTo(new Vector2d(-24, 21));
                 //.splineToSplineHeading(new Pose2d(-7, 18, Math.toRadians(90)), Math.toRadians(0));
                 //.strafeTo(new Vector2d(19, 38));
-        TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,20,Math.toRadians(80)))
+        TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,21,Math.toRadians(80)))
                 .turn(Math.toRadians(-40))
                 .strafeTo(new Vector2d(-24, 21))
                 .turn(Math.toRadians(40))
@@ -243,14 +243,14 @@ public class REDBUCKET extends LinearOpMode {
 
                 .turn(Math.toRadians(160))
 
-                .strafeTo(new Vector2d(-22,9));
+                .strafeTo(new Vector2d(-22,10));
 
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-22,9,Math.toRadians(250)))
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-22,10,Math.toRadians(250)))
                 .turn(Math.toRadians(-152))
                 //.splineToSplineHeading(new Pose2d(12, 36, Math.toRadians(100)), Math.toRadians(180))
                 //.turn(Math.toRadians(95))
-                .strafeTo(new Vector2d(-24,15));
-        TrajectoryActionBuilder tabexit = drive.actionBuilder( new Pose2d(-24,15,Math.toRadians(108)))
+                .strafeTo(new Vector2d(-24,17));
+        TrajectoryActionBuilder tabexit = drive.actionBuilder( new Pose2d(-24,17,Math.toRadians(108)))
                 .turn(Math.toRadians(-40))
                 .strafeTo(new Vector2d(-24, 19))
                 .turn(Math.toRadians(40))
