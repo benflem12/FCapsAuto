@@ -234,12 +234,12 @@ public class REDBUCKET extends LinearOpMode {
                 //.strafeTo(new Vector2d(19, 38));
         TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,21,Math.toRadians(80)))
                 .turn(Math.toRadians(-40))
-                .strafeTo(new Vector2d(-24, 21))
+                .strafeTo(new Vector2d(-24, 22))
                 .turn(Math.toRadians(40))
                 .waitSeconds(1);
                 //.strafeTo(new Vector2d(14.5,38));
                 //.strafeTo(new Vector2d(16,38));
-        TrajectoryActionBuilder tab3 = drive.actionBuilder( new Pose2d(-24,21,Math.toRadians(90)))
+        TrajectoryActionBuilder tab3 = drive.actionBuilder( new Pose2d(-24,22,Math.toRadians(90)))
 
                 .turn(Math.toRadians(160))
 
@@ -249,16 +249,16 @@ public class REDBUCKET extends LinearOpMode {
                 .turn(Math.toRadians(-152))
                 //.splineToSplineHeading(new Pose2d(12, 36, Math.toRadians(100)), Math.toRadians(180))
                 //.turn(Math.toRadians(95))
-                .strafeTo(new Vector2d(-24,17));
-        TrajectoryActionBuilder tabexit = drive.actionBuilder( new Pose2d(-24,17,Math.toRadians(108)))
+                .strafeTo(new Vector2d(-23,17));
+        TrajectoryActionBuilder tabexit = drive.actionBuilder( new Pose2d(-23,17,Math.toRadians(108)))
                 .turn(Math.toRadians(-40))
-                .strafeTo(new Vector2d(-24, 19))
+                .strafeTo(new Vector2d(-23, 20))
                 .turn(Math.toRadians(40))
                 .waitSeconds(1);
                 //.strafeTo(new Vector2d(16,38));
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-24,19,Math.toRadians(108)))
-                .turn(Math.toRadians(-215))
-                .strafeTo(new Vector2d(-22,9))
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-23,19,Math.toRadians(108)))
+                .turn(Math.toRadians(-213))
+                .strafeTo(new Vector2d(-19,6))
                 .waitSeconds(0.5);
 
         Action trajectoryActionCloseOut = tab1.endTrajectory().fresh()
@@ -332,7 +332,7 @@ public class REDBUCKET extends LinearOpMode {
                                 trajectoryActionChosen2,
                                 lift.liftDown()
                         ),
-                                intake.FlipDown(),
+                        intake.FlipDown(),
                         new ParallelAction(
                                 trajectoryActionChosenenter,
                                 intake.IntakeIn()
