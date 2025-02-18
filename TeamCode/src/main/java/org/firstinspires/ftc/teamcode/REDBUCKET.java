@@ -224,15 +224,15 @@ public class REDBUCKET extends LinearOpMode {
 
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(0, 5))
-                    .splineToSplineHeading(new Pose2d(-14, 8, Math.toRadians(220)), Math.toRadians(190))
+                    .splineToSplineHeading(new Pose2d(-16, 7, Math.toRadians(220)), Math.toRadians(190))
                     .waitSeconds(0.5);
         TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-22,9 ,Math.toRadians(220)))
                 .strafeTo(new Vector2d(-24, 7))
                 .turn(Math.toRadians(-120))
-                .strafeTo(new Vector2d(-24, 21));
+                .strafeTo(new Vector2d(-24, 22));
                 //.splineToSplineHeading(new Pose2d(-7, 18, Math.toRadians(90)), Math.toRadians(0));
                 //.strafeTo(new Vector2d(19, 38));
-        TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,21,Math.toRadians(80)))
+        TrajectoryActionBuilder tabenter = drive.actionBuilder( new Pose2d(-24,22,Math.toRadians(80)))
                 .turn(Math.toRadians(-40))
                 .strafeTo(new Vector2d(-24, 22))
                 .turn(Math.toRadians(40))
@@ -252,11 +252,11 @@ public class REDBUCKET extends LinearOpMode {
                 .strafeTo(new Vector2d(-23,17));
         TrajectoryActionBuilder tabexit = drive.actionBuilder( new Pose2d(-23,17,Math.toRadians(108)))
                 .turn(Math.toRadians(-40))
-                .strafeTo(new Vector2d(-23, 20))
+                .strafeTo(new Vector2d(-23, 21))
                 .turn(Math.toRadians(40))
                 .waitSeconds(1);
                 //.strafeTo(new Vector2d(16,38));
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-23,19,Math.toRadians(108)))
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-23,21,Math.toRadians(108)))
                 .turn(Math.toRadians(-213))
                 .strafeTo(new Vector2d(-19,6))
                 .waitSeconds(0.5);
